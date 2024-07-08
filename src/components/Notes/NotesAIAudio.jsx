@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
 
-const NotesAISummary = ({ notes }) => {
+const NotesAIAudio = ({ notes }) => {
   const modalRef = useRef();
   const resultsRef = useRef();
   const [stream, setStream] = useState(false);
 
-  const handleAISummary = async () => {};
+  const handleAIAudio = async () => {};
 
   return (
     <>
@@ -14,13 +14,13 @@ const NotesAISummary = ({ notes }) => {
           onClick={() => modalRef.current.showModal()}
           className='bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded-full shadow-lg w-15 h-10'
         >
-          ✨
+          🎶✨
         </button>
       </div>
       <dialog id='modal-note' className='modal' ref={modalRef}>
         <div className='modal-box h-[600px] py-0'>
           <div className='modal-action items-center justify-between mb-2'>
-            <h1 className='text-2xl text-center'>Get AI Gen summary</h1>
+            <h1 className='text-2xl text-center'>Get AI Gen Audio</h1>
             <label htmlFor='Stream?' className='flex items-center gap-1'>
               Stream?
               <input
@@ -41,13 +41,13 @@ const NotesAISummary = ({ notes }) => {
               className='textarea textarea-success w-full h-[400px] overflow-y-scroll'
               ref={resultsRef}
             >
-              AI SUMMARY GOES HERE
+              AI Audio GOES HERE
             </div>
             <button
               className='mt-5 btn bg-purple-500 hover:bg-purple-400 text-white'
-              onClick={handleAISummary}
+              onClick={handleAIAudio}
             >
-              Gen AI summary ✨
+              Gen AI Audio 🎶✨
             </button>
           </div>
         </div>
@@ -56,4 +56,4 @@ const NotesAISummary = ({ notes }) => {
   );
 };
 
-export default NotesAISummary;
+export default NotesAIAudio;

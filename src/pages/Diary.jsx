@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { CreateEntry, MoodAIAnalysis, EntriesList } from '@/components/Diary';
+import { CreateEntry, EntriesList } from '@/components/Diary';
 import { toast } from 'react-toastify';
 
 const Diary = () => {
@@ -21,7 +21,6 @@ const Diary = () => {
     <>
       <EntriesList entries={entries} />
       <CreateEntry setEntries={seEntries} />
-      <MoodAIAnalysis entries={entries} />
     </>
   );
 };

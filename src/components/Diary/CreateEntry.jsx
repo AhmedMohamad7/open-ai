@@ -32,7 +32,7 @@ const CreateEntry = ({ setEntries }) => {
 
   return (
     <>
-      <div className='fixed bottom-4 right-16'>
+      <div className='fixed bottom-4 right-4'>
         <button
           onClick={() => modalRef.current.showModal()}
           className='bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded-full shadow-lg w-10 h-10'

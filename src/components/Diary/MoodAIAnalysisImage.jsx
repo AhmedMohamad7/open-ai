@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 import { Charts } from '@/components/Diary';
 
-const MoodAIAnalysis = ({ entries }) => {
+const MoodAIAnalysisImage = ({ entries }) => {
   const modalRef = useRef();
 
-  const handleAISummary = async () => {};
+  const handleAIImage = async () => {};
 
   return (
     <>
@@ -13,7 +13,7 @@ const MoodAIAnalysis = ({ entries }) => {
           onClick={() => modalRef.current.showModal()}
           className='bg-purple-400 hover:bg-purple-300 text-white font-bold py-2 px-4 rounded-full shadow-lg w-15 h-10'
         >
-          ✨
+          📸✨
         </button>
       </div>
       <dialog id='modal-note' className='modal' ref={modalRef}>
@@ -26,7 +26,7 @@ const MoodAIAnalysis = ({ entries }) => {
           </div>
           <div className='flex items-center gap-3'>
             <div className='textarea textarea-success w-1/2 h-[400px] overflow-y-scroll'>
-              AI SUMMARY GOES HERE...
+              AI Image GOES HERE...
             </div>
             <div className='textarea textarea-success w-1/2 h-[400px] overflow-y-scroll'>
               <Charts aiSummary='' />
@@ -35,9 +35,9 @@ const MoodAIAnalysis = ({ entries }) => {
           <div className='flex justify-center'>
             <button
               className='mt-5 btn bg-purple-500 hover:bg-purple-400 text-white'
-              onClick={handleAISummary}
+              onClick={handleAIImage}
             >
-              Gen AI mood analysis ✨
+              Gen AI mood analysis Image 📸✨
             </button>
           </div>
         </div>
@@ -46,4 +46,4 @@ const MoodAIAnalysis = ({ entries }) => {
   );
 };
 
-export default MoodAIAnalysis;
+export default MoodAIAnalysisImage;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { CreateNote, NotesAISummary, NotesList } from '@/components/Notes';
+import { CreateNote,NotesList } from '@/components/Notes';
 import { toast } from 'react-toastify';
 
 const SchoolNotes = () => {
@@ -21,7 +21,6 @@ const SchoolNotes = () => {
     <>
       <NotesList notes={notes} />
       <CreateNote setNotes={setNotes} />
-      <NotesAISummary notes={notes} />
     </>
   );
 };
