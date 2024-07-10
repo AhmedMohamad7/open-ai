@@ -15,7 +15,7 @@ const MoodAIAnalysisImage = ({ entry,aiImageChanged,setAiImageChanged }) => {
           'Content-Type': 'application/json',
           'Authorization': "d0lqyh9yiy8mgqdgm8nqxc",
           "provider":"open-ai",
-          "mode":"production",
+          "mode":"development",
         },
         body: JSON.stringify({
           
