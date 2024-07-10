@@ -1,7 +1,7 @@
 import  MoodAIAnalysis  from "./MoodAIAnalysis.jsx";
 import MoodAIAnalysisAudio from "./MoodAIAnalysisAudio.jsx";
 import MoodAIAnalysisImage from "./MoodAIAnalysisImage.jsx";
-const EntryCard = ({ entry,entries}) => {
+const EntryCard = ({ entry}) => {
   return (
     <div className='card bg-base-100 shadow-xl'>
       <figure className='bg-white h-48'>
@@ -13,9 +13,9 @@ const EntryCard = ({ entry,entries}) => {
         <p className='truncate text-wrap'>{entry.content}</p>
       </div>
       <div className="flex flex-row mb-2 card-actions justify-center">
-      <MoodAIAnalysis entries={entries} />
-      <MoodAIAnalysisAudio entries={entries} />
-      <MoodAIAnalysisImage entries={entries} />
+      <MoodAIAnalysis entry={entry} />
+      <MoodAIAnalysisAudio entry={entry} />
+      <MoodAIAnalysisImage entry={entry} />
       </div>
     </div>
   );

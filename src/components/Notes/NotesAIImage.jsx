@@ -1,12 +1,63 @@
 import { useRef, useState } from 'react';
 
-const NotesAIImage = ({ notes }) => {
+const NotesAIImage = ({ note  }) => {
   const modalRef = useRef();
   const resultsRef = useRef();
-  const [stream, setStream] = useState(false);
+  const [aiImage, setAiImage] = useState("");
+  const handleAIImage = async () => {
+    try {
+      resultsRef.current.innerHTML = ' Image Loading...';
+      const response = await fetch('https://gen-ai-wbs-consumer-api.onrender.com/api/v1/images/generations', {
+        method: 'POST',
+        headers: {
+          
+          'Content-Type': 'application/json',
+          'Authorization': "d0lqyh9yiy8mgqdgm8nqxc",
+          "provider":"open-ai",
+          "mode":"production",
+        },
+        body: JSON.stringify({
+          
+            "model": "dall-e-3",
+      "prompt": `Generate an image of a ${note.title}`,
+      "n": 1,
+      "size": "1024x1024"
+      }
+        )
+      });
 
-  const handleAIImage = async () => {};
-
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log(data);
+      const imageUrl = data[0].url;
+      setAiImage(imageUrl);
+      resultsRef.current.innerHTML = `<img src="${imageUrl}" class="w-full h-full" alt="AI Image" />`;
+    } catch (error) {
+      console.error('Error fetching Image:', error);
+      resultsRef.current.innerText = 'Error fetching Image';
+    }
+  };
+  const handleNoteImage = async() => {
+    try {
+      const response1=await fetch ("http://localhost:8080/notes/"+note._id,
+        {
+          method:"PUT",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify({
+            "image":aiImage
+          })
+        }
+      )
+      
+        const data= await response1.json();
+        console.log(data);
+    } catch (error) {
+      console.error('Error fetching Image:', error);
+  }}
   return (
     <>
       <div className='flex justify-center mb-2'>
@@ -21,17 +72,6 @@ const NotesAIImage = ({ notes }) => {
         <div className='modal-box h-[600px] py-0'>
           <div className='modal-action items-center justify-between mb-2'>
             <h1 className='text-2xl text-center'>Get AI Gen Image</h1>
-            <label htmlFor='Stream?' className='flex items-center gap-1'>
-              Stream?
-              <input
-                id='Stream?'
-                type='checkbox'
-                className='toggle toggle-error'
-                checked={stream}
-                onChange={() => setStream(p => !p)}
-              />
-            </label>
-
             <form method='dialog'>
               <button className='btn'>&times;</button>
             </form>
@@ -48,6 +88,12 @@ const NotesAIImage = ({ notes }) => {
               onClick={handleAIImage}
             >
               Gen AI Image  📸✨
+            </button>
+            <button
+              className='mt-5 btn bg-purple-500 hover:bg-purple-400 text-white'
+              onClick={handleNoteImage}
+            >
+              Set as Note Image
             </button>
           </div>
         </div>

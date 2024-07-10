@@ -1,7 +1,8 @@
 import NotesAISummary  from "./NotesAISummary.jsx";
 import NotesAIAudio from "./NotesAIAudio.jsx";
 import NotesAIImage from "./NotesAIImage.jsx";
-const NoteCard = ({ note,notes}) => {
+const NoteCard = ({ note }) => {
+ 
   return (
     <div className='card bg-base-100 shadow-xl'>
       <figure className='bg-white h-48'>
@@ -12,9 +13,9 @@ const NoteCard = ({ note,notes}) => {
         <p className='truncate text-wrap'>{note.content}</p>
       </div>
       <div className='card-actions flex flex-row'>
-        <NotesAISummary notes={notes} />
-        <NotesAIAudio notes={notes} />
-        <NotesAIImage notes={notes} />
+        <NotesAISummary note={note}/>
+        <NotesAIAudio note={note}/>
+        <NotesAIImage note={note}/>
       </div>
     </div>
   );

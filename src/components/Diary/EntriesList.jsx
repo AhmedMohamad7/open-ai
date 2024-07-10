@@ -6,7 +6,7 @@ const EntriesList = ({ entries }) => {
   return (
     <div className='p-5 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4'>
       {entries.map(e => (
-        <EntryCard key={e._id} entry={e} entries={entries} />
+        <EntryCard key={e._id} entry={e}  />
       ))}
     </div>
   );
