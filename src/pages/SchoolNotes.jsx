@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 const SchoolNotes = () => {
   const [notes, setNotes] = useState([]);
-
+  const [aiImageChanged, setAiImageChanged ] = useState(false);
   useEffect(() => {
     (async () => {
       try {
@@ -15,11 +15,11 @@ const SchoolNotes = () => {
         toast.error(error.message);
       }
     })();
-  }, []);
+  }, [aiImageChanged]);
 
   return (
     <>
-      <NotesList notes={notes} />
+      <NotesList notes={notes} aiImageChanged={aiImageChanged} setAiImageChanged={setAiImageChanged}/>
       <CreateNote setNotes={setNotes} />
     </>
   );
