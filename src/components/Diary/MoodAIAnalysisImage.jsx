@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Charts } from '@/components/Diary';
 import {useState} from 'react';
-const MoodAIAnalysisImage = ({ entry }) => {
+const MoodAIAnalysisImage = ({ entry,aiImageChanged,setAiImageChanged }) => {
   const modalRef = useRef();
   const resultsRef = useRef();
   const [aiImage, setAiImage] = useState("");
@@ -57,6 +57,7 @@ const MoodAIAnalysisImage = ({ entry }) => {
       )
       const data= await response1.json();
       console.log(data);
+      setAiImageChanged(!aiImageChanged);
   } catch (error) {
     console.error('Error fetching Image:', error);
 }}
@@ -92,7 +93,7 @@ const MoodAIAnalysisImage = ({ entry }) => {
             </button>
             <button
               className='mt-5 btn bg-purple-500 hover:bg-purple-400 text-white'
-              onClick={handleEntryImage}
+              onClick={handleEntryImage} onClickCapture={() => modalRef.current.close()}
             >
               Set as Diary Image
             </button>

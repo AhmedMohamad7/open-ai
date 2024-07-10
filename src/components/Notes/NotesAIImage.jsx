@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
-
-const NotesAIImage = ({ note  }) => {
+import { useRef } from 'react';
+import { useState } from 'react';
+const NotesAIImage = ({ note,aiImageChanged,setAiImageChanged}) => {
   const modalRef = useRef();
   const resultsRef = useRef();
   const [aiImage, setAiImage] = useState("");
@@ -10,20 +10,17 @@ const NotesAIImage = ({ note  }) => {
       const response = await fetch('https://gen-ai-wbs-consumer-api.onrender.com/api/v1/images/generations', {
         method: 'POST',
         headers: {
-          
           'Content-Type': 'application/json',
           'Authorization': "d0lqyh9yiy8mgqdgm8nqxc",
-          "provider":"open-ai",
-          "mode":"production",
+          "provider": "open-ai",
+          "mode": "production",
         },
         body: JSON.stringify({
-          
-            "model": "dall-e-3",
-      "prompt": `Generate an image of a ${note.title}`,
-      "n": 1,
-      "size": "1024x1024"
-      }
-        )
+          "model": "dall-e-3",
+          "prompt": `Generate an image of a ${note.title}`,
+          "n": 1,
+          "size": "1024x1024"
+        })
       });
 
       if (!response.ok) {
@@ -39,25 +36,27 @@ const NotesAIImage = ({ note  }) => {
       resultsRef.current.innerText = 'Error fetching Image';
     }
   };
-  const handleNoteImage = async() => {
+
+  const handleNoteImage = async () => {
     try {
-      const response1=await fetch ("http://localhost:8080/notes/"+note._id,
-        {
-          method:"PUT",
-          headers:{
-            "Content-Type":"application/json"
-          },
-          body:JSON.stringify({
-            "image":aiImage
-          })
-        }
-      )
-      
-        const data= await response1.json();
-        console.log(data);
+      const response1 = await fetch("http://localhost:8080/notes/" + note._id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "image": aiImage
+        })
+      });
+
+      const data = await response1.json();
+      console.log(data);
+      setAiImageChanged(!aiImageChanged);
     } catch (error) {
-      console.error('Error fetching Image:', error);
-  }}
+      console.error('Error setting Note Image:', error);
+    }
+  };
+
   return (
     <>
       <div className='flex justify-center mb-2'>
@@ -87,11 +86,11 @@ const NotesAIImage = ({ note  }) => {
               className='mt-5 btn bg-purple-500 hover:bg-purple-400 text-white'
               onClick={handleAIImage}
             >
-              Gen AI Image  📸✨
+              Gen AI Image 📸✨
             </button>
             <button
               className='mt-5 btn bg-purple-500 hover:bg-purple-400 text-white'
-              onClick={handleNoteImage}
+              onClick={handleNoteImage} onClickCapture={() => modalRef.current.close()}
             >
               Set as Note Image
             </button>

@@ -1,7 +1,8 @@
 import NotesAISummary  from "./NotesAISummary.jsx";
 import NotesAIAudio from "./NotesAIAudio.jsx";
 import NotesAIImage from "./NotesAIImage.jsx";
-const NoteCard = ({ note }) => {
+import { useState } from "react";
+const NoteCard = ({ note,aiImageChanged,setAiImageChanged }) => {
  
   return (
     <div className='card bg-base-100 shadow-xl'>
@@ -15,7 +16,7 @@ const NoteCard = ({ note }) => {
       <div className='card-actions flex flex-row'>
         <NotesAISummary note={note}/>
         <NotesAIAudio note={note}/>
-        <NotesAIImage note={note}/>
+        <NotesAIImage note={note} aiImageChanged={aiImageChanged} setAiImageChanged={setAiImageChanged}/>
       </div>
     </div>
   );

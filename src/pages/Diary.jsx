@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 const Diary = () => {
   const [entries, seEntries] = useState([]);
-
+  const [aiImageChanged, setAiImageChanged ] = useState(false);
   useEffect(() => {
     (async () => {
       try {
@@ -15,11 +15,11 @@ const Diary = () => {
         toast.error(error.message);
       }
     })();
-  }, []);
+  }, [aiImageChanged]);
 
   return (
     <>
-      <EntriesList entries={entries} />
+      <EntriesList entries={entries} aiImageChanged={aiImageChanged} setAiImageChanged={setAiImageChanged}/>
       <CreateEntry setEntries={seEntries} />
     </>
   );
