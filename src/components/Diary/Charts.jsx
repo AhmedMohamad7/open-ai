@@ -1,5 +1,5 @@
 const Charts = ({ aiSummary }) => {
-  return <div>Charts go here</div>;
+  return <div>{aiSummary}</div>;
 };
 
 export default Charts;

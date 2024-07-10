@@ -1,11 +1,64 @@
 import { useRef, useState } from 'react';
 
-const NotesAIAudio = ({ notes }) => {
+const NotesAIAudio = ({ note }) => {
   const modalRef = useRef();
   const resultsRef = useRef();
-  const [stream, setStream] = useState(false);
 
-  const handleAIAudio = async () => {};
+  const handleAIAudio = async () => {
+      const response1 = await fetch('https://gen-ai-wbs-consumer-api.onrender.com/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "d0lqyh9yiy8mgqdgm8nqxc",
+          "provider":"open-ai",
+          "mode":"production",
+        },
+        body: JSON.stringify({
+          "model": "gpt-4o",
+          "stream": false,
+          "messages": [
+            {
+              "role": "user",
+              "content": `Summarize the following text:\n\n${note.content}`
+            }
+          ]
+        })
+      });
+
+      if (!response1.ok) {
+        throw new Error('Network response was not ok');
+      }
+          const data = await response1.json();
+          const summary = data.message.content.trim();
+    try {
+      const response = await fetch('https://gen-ai-wbs-consumer-api.onrender.com/api/v1/audio/speech', {
+        method: 'POST',
+        headers: {
+          
+          'Content-Type': 'application/json',
+          'Authorization': "d0lqyh9yiy8mgqdgm8nqxc",
+          "provider":"open-ai",
+          "mode":"production",
+        },
+        body: JSON.stringify({
+          "model": "tts-1",
+          "voice": "alloy",
+          "input": summary
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const blob = await response.blob();
+      const audioUrl = URL.createObjectURL(blob);
+      resultsRef.current.innerHTML = `<audio controls src="${audioUrl}">`;
+    } catch (error) {
+      console.error('Error fetching Summary Audio:', error);
+      resultsRef.current.innerText = 'Error fetching Summary Audio';
+    }
+  };
 
   return (
     <>
@@ -21,17 +74,6 @@ const NotesAIAudio = ({ notes }) => {
         <div className='modal-box h-[600px] py-0'>
           <div className='modal-action items-center justify-between mb-2'>
             <h1 className='text-2xl text-center'>Get AI Gen Audio</h1>
-            <label htmlFor='Stream?' className='flex items-center gap-1'>
-              Stream?
-              <input
-                id='Stream?'
-                type='checkbox'
-                className='toggle toggle-error'
-                checked={stream}
-                onChange={() => setStream(p => !p)}
-              />
-            </label>
-
             <form method='dialog'>
               <button className='btn'>&times;</button>
             </form>
@@ -47,7 +89,7 @@ const NotesAIAudio = ({ notes }) => {
               className='mt-5 btn bg-purple-500 hover:bg-purple-400 text-white'
               onClick={handleAIAudio}
             >
-              Gen AI Audio 🎶✨
+              Gen AI Summary Audio 🎶✨
             </button>
           </div>
         </div>
