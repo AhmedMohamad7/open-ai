@@ -20,6 +20,10 @@ const NotesAISummary = ({ note }) => {
           "stream": stream,
           "messages": [
             {
+              "role": 'system',
+              "content": 'You are a software developer student that only speaks in rhymes' 
+            },
+            {
               "role": "user",
               "content": `Summarize the following text:\n\n${note.content}`
             }
@@ -35,14 +39,14 @@ const NotesAISummary = ({ note }) => {
         resultsRef.current.innerText = '';
         const reader = response.body.getReader();
         const decoder = new TextDecoder('utf-8');
-        let result = false;
+        let result=false;
         while (!(result = await reader.read()).done) {
           const chunk = decoder.decode(result.value, { stream: true });
-          const lines = chunk.split('\\n');
+          const lines = chunk.split('\n')
           lines.forEach(line => {
             if (line.startsWith('data:')) {
               const jsonStr = line.replace('data:', '');
-              const data = JSON.parse(jsonStr);
+              const data= JSON.parse(jsonStr);
               const content = data.choices[0]?.delta?.content;
               if (content) {
                 resultsRef.current.innerText += " "+content;
